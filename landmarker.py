@@ -5,7 +5,7 @@ from mediapipe.framework.formats import landmark_pb2
 import numpy as np
 
     
-class FaceDetector:
+class FaceLandmarkDetector:
     def __init__(self):
         self.result = mp.tasks.vision.FaceLandmarkerResult
         self.landmarker = mp.tasks.vision.FaceLandmarker

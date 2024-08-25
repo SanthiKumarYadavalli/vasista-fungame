@@ -4,13 +4,30 @@ from time import time, sleep
 from math import inf
 from landmarker import FaceLandmarkDetector
 from game_utils import Player, NUM_QUESTIONS, DELAY, TIME_LIMIT
+from styles import CSS
 
 THRESH = 0.055  # head tilt threshold
 
 cap = cv2.VideoCapture(0)
 face_detector = FaceLandmarkDetector()
 
-run = st.toggle("RUN")
+st.markdown(CSS, unsafe_allow_html=True)  # custom css
+# sidebar
+st.logo("hho_logo.png")
+st.sidebar.markdown(
+"""
+<h1 style="text-align:center;">HHO Presents</h1>
+<h1 style="text-align:center;color:gold;font-family:'Prata';">VASISTA 2K24</h1>
+""", unsafe_allow_html=True)
+st.sidebar.image("krishna.gif")
+st.sidebar.markdown("""
+<p>You will be shown two math expressions.<br>
+You must choose the one which has greater value by tilting your head to the left or right.<br>
+If you tilt correctly, you will score a point.<br>
+GOOD LUCK!</p>
+""", unsafe_allow_html=True)
+
+# run = st.toggle("RUN")
 col1, col2, col3 = st.columns(3)
 with col1:
     score_container = st.empty()
@@ -29,6 +46,8 @@ with col2:
 image_container = st.empty()
 again_btn = st.empty()
 
+run = image_container.button("PLAY!")
+
 # 3 2 1 timer
 if run:
     image_container.markdown("<h1 style='text-align:center'>3</h1>", unsafe_allow_html=True)
@@ -38,20 +57,6 @@ if run:
     image_container.markdown("<h1 style='text-align:center'>1</h1>", unsafe_allow_html=True)
     sleep(1)
     image_container.empty()
-
-# custom styles
-st.markdown("""<style>
-body{
-    text-align: center
-} 
-img {
-    position: absolute;
-    left: calc(50% - 295px);
-    border-radius: 25px;
-}
-h2 span {display: none !important;}
-
-</style>""", unsafe_allow_html=True)
 
 player = Player()
 qidx = 0
@@ -135,6 +140,6 @@ if run:
         image_container.header("Well Played !")
     else:
         image_container.empty()
-    again_btn.button("PLAY AGAIN!")
+    again_btn.button("RESTART")
 if player.score == NUM_QUESTIONS:
     st.balloons()

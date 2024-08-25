@@ -19,6 +19,8 @@ with col2:
 with col3:
     qno_container = st.empty()
     
+st.divider()
+    
 col1, col2 = st.columns(2)
 with col1:
     left_question_container = st.empty()
@@ -44,9 +46,11 @@ body{
 } 
 img {
     position: absolute;
-    left: calc(50% - 25%);
+    left: calc(50% - 295px);
     border-radius: 25px;
 }
+h2 span {display: none !important;}
+
 </style>""", unsafe_allow_html=True)
 
 player = Player()
@@ -60,7 +64,8 @@ rexp = player.expressions[qidx].right  # right expression text
 while run:
     secs_left = int(end_time - time())
     if secs_left <= 0:
-        image_container.subheader(":red[Time's Up!]")
+        timer_container.subheader(":red[Time's Up!]")
+        image_container.empty()
         break
     timer_container.header(secs_left)  # timer
     qno_container.subheader(f"Q: {qidx + 1} / {NUM_QUESTIONS}") # question number
@@ -68,7 +73,6 @@ while run:
     if time() - answered_time > DELAY: # show next question after delay
         qidx += 1
         if qidx == NUM_QUESTIONS:
-            run = False
             break
         lexp = player.expressions[qidx].left
         rexp = player.expressions[qidx].right
@@ -124,13 +128,13 @@ while run:
 cap.release()
 left_question_container.empty()
 right_question_container.empty()
-if not run:
+if run:
     if player.score == 0:
         image_container.header("Better luck next time")
     elif player.score == NUM_QUESTIONS:
         image_container.header("Well Played !")
     else:
         image_container.empty()
+    again_btn.button("PLAY AGAIN!")
 if player.score == NUM_QUESTIONS:
     st.balloons()
-again_btn.button("PLAY AGAIN!")

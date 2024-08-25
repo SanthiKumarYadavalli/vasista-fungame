@@ -1,8 +1,9 @@
 import random
 
-NUM_OPERATORS = 4
+NUM_OPERATORS = 3
 MAX_NUM = 9
-NUM_QUESTIONS = 5
+NUM_QUESTIONS = 3
+TIME_LIMIT = 40 #secs
 DELAY = 1  # seconds to wait for next question
 
 
@@ -27,8 +28,7 @@ class Expressions:
 
 
 class Player:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
         self.score = 0
         self.expressions = [Expressions() for _  in range(NUM_QUESTIONS)]
     
